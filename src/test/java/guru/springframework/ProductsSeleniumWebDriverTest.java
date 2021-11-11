@@ -70,7 +70,22 @@ public class ProductsSeleniumWebDriverTest {
 
 		assertEquals(actualProductID, expectedProductID);
 	}
-
+	
+	@Test (description = "edit product info", dependsOnMethods = "viewProduct")
+	public void editProductInfo() {
+		driver.navigate().back();
+		driver.findElement(By.linkText("Edit")).click();
+		driver.findElement(By.className("form-control")).sendKeys("235268845711061996");
+		
+		driver.findElement(By.xpath("/html/body/div/div[2]/form/div[5]/button")).click();
+		driver.navigate().back();
+		driver.navigate().back();
+		
+		String newID = driver.findElement(By.xpath("/html/body/div/div[2]/table/tbody/tr[2]/td[2]")).getText();
+		
+		assertTrue(newID.endsWith("1996"));
+	}
+	
 	@AfterSuite(description = "testler bitince browser pagelerini kapatır.")
 	public void close() throws InterruptedException {
 		TimeUnit.SECONDS.sleep(2);
